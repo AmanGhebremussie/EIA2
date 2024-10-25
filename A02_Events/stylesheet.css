@@ -1,28 +1,55 @@
 body {
     margin: 0;
-    padding: 20px;
+    padding: 40px;
     height: 100vh;
     display: flex;
-    flex-direction: column;
     box-sizing: border-box;
+}
+
+.outer-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    padding: 20px;
 }
 
 h1 {
     text-align: left;
-    margin-left: 40px;
+    margin-bottom: 50px;
 }
 
-.container {
+.inner-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     flex-grow: 1;
-    margin: 80px 40px;
 }
 
 #div0, #div1 {
-    flex: 0 0 calc(50% - 50px);
+    flex: 0 0 calc(50% - 10px);
     background-color: white;
     border: 2px solid black;
     box-sizing: border-box;
 }
+
+#div0 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#myButton {
+position: fixed;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#myButton:hover {
+    background-color: #45a049;
+}
+
