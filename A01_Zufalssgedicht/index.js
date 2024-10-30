@@ -16,7 +16,5 @@ function getVerse(_subjects, _verbs, _predicate) {
     return verse; // Gebe die Vers-Variable zurück
 }
 // Generiere einen Vers und gebe ihn aus
-console.log(getVerse(subjects, verbs, predicate)); // Direkte Ausgabe ohne Zwischenspeicherung
-document.addEventListener('DOMContentLoaded', function () {
-    alert("Drücken Sie F12");
-});
+alert(getVerse(subjects, verbs, predicate));
+// Direkte Ausgabe ohne Zwischenspeicherung
