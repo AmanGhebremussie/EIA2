@@ -16,5 +16,5 @@ function getVerse(_subjects, _verbs, _predicate) {
     return verse; // Gebe die Vers-Variable zurück
 }
 // Generiere einen Vers und gebe ihn aus
-alert(getVerse(subjects, verbs, predicate));
+console.log(getVerse);
 // Direkte Ausgabe ohne Zwischenspeicherung
