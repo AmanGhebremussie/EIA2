@@ -22,5 +22,4 @@ function getVerse(_subjects: string[], _verbs: string[], _predicate: string[]): 
 }
 
 // Generiere einen Vers und gebe ihn aus
-const verse = getVerse(subjects, verbs, predicate); //subject, verb, predicate werden  
-console.log(verse); // Ausgabe des generierten Verses
+console.log(getVerse(subjects, verbs, predicate)); // Direkte Ausgabe ohne Zwischenspeicherung
