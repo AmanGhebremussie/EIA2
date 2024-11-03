@@ -7,18 +7,21 @@
     <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container">             <! Container um alles in einem Container zu haben>
         <h1>To Dos</h1>
+
         
-        <div class="task">
+        <div class="task">               <! Aufgabe als eine Klasse, um sie später Eigenschaften zu geben>
+            <div class="Fällig">        <! Fällig als eine Klasse, um Fälligkeit zu visualieren>
             <h2>Klo putzen</h2>
             <p><strong>Zuständig:</strong> Kevin</p>
             <p><strong>Fällig:</strong> gestern</p>
             <p><strong>Kommentar:</strong> "die große Bürste benutzen!"</p>
             <div class="button-container">
-                <button class="Bearbeitenbtn"> Bearbeiten </button>
-                <button class="Löschenbtn"> Löschen</button>
+                <button class="Bearbeitenbtn"> Bearbeiten </button>             <! Button zum Bearbeiten der Aufgabe>
+                <button class="Löschenbtn"> Löschen</button> <! Button zum Löschen der Aufgabe>
             </div>
+        </div>
         </div>
 
         <div class="task">
@@ -28,7 +31,7 @@
             <p><strong>Kommentar:</strong> " "</p>
             <div class="button-container"></div>
                 <button class="Bearbeitenbtn"> Bearbeiten </button>
-                <button class="Löschenbtn"> Löschen</button>
+                <button class="Übernehmenbtn"> Übernehmen </button>
             </div>
         </div>
     </div>

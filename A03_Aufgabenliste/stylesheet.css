@@ -6,6 +6,11 @@
     margin: 20px auto;
 }
 
+.Fällig{
+     background-color: red;
+    border: 2px;
+}
+
 .task {
     margin-bottom: 20px;
     padding: 10px;
