@@ -1,0 +1,26 @@
+.container {
+    border: 2px solid black;
+    margin: 20px;
+    padding: 20px;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.task {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+p {
+    margin: 5px 0;
+}
