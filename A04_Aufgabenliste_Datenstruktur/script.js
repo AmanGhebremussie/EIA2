@@ -1,4 +1,3 @@
-// import { data, Item, Data } from "./data";
 var L04;
 (function (L04) {
     document.addEventListener("DOMContentLoaded", function () {
@@ -7,13 +6,19 @@ var L04;
         function createPlaceholder() {
             var taskContainer = document.createElement("div");
             taskContainer.classList.add("task"); // Klasse für die neue Aufgabe
-            taskContainer.innerHTML = "\n            <h2>Neue Aufgabe</h2>\n            <p><strong>Zust\u00E4ndig:</strong> Name</p>\n            <p><strong>F\u00E4llig:</strong> Datum</p>\n            <p><strong>Kommentar:</strong> \"Kommentar hier\"</p>\n            <div class=\"button-container\">\n                <button class=\"Bearbeitenbtn\"> Bearbeiten </button>\n                <button class=\"L\u00F6schenbtn\"> L\u00F6schen</button>\n            </div>\n        ";
+            taskContainer.innerHTML = "\n                <h2>Neue Aufgabe</h2>\n                <p><strong>Zust\u00E4ndig:</strong> Name</p>\n                <p><strong>F\u00E4llig:</strong> Datum</p>\n                <p><strong>Kommentar:</strong> \"Kommentar hier\"</p>\n                <div class=\"button-container\">\n                    <button class=\"Bearbeitenbtn\"> Bearbeiten </button>\n                    <button class=\"L\u00F6schenbtn\"> L\u00F6schen</button>\n                </div>\n            ";
             // Den "Löschen"-Button finden und den Event-Listener hinzufügen
             var löschenButton = taskContainer.querySelector(".Löschenbtn");
             if (löschenButton) {
                 löschenButton.addEventListener("click", function () {
-                    taskContainer.remove(); // Entfernt das gesamte Task-Element
-                    console.log("Aufgabe gelöscht");
+                    // Sicherheitsabfrage zum Löschen
+                    if (confirm("Möchten Sie diese Aufgabe wirklich löschen?")) {
+                        taskContainer.remove(); // Entfernt das gesamte Task-Element
+                        console.log("Aufgabe gelöscht");
+                    }
+                    else {
+                        console.log("Löschen abgebrochen");
+                    }
                 });
             }
             // Das neue Element in den DOM einfügen
@@ -34,8 +39,14 @@ var L04;
             var löschenButton = task.querySelector(".Löschenbtn");
             if (löschenButton) {
                 löschenButton.addEventListener("click", function () {
-                    task.remove(); // Entfernt das gesamte Task-Element
-                    console.log("Aufgabe gelöscht");
+                    // Sicherheitsabfrage zum Löschen
+                    if (confirm("Möchten Sie diese Aufgabe wirklich löschen?")) {
+                        task.remove(); // Entfernt das gesamte Task-Element
+                        console.log("Aufgabe gelöscht");
+                    }
+                    else {
+                        console.log("Löschen abgebrochen");
+                    }
                 });
             }
         });
