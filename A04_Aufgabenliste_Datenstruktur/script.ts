@@ -15,6 +15,14 @@
                 <button class="Löschenbtn"> Löschen</button>
             </div>
         `;
+        
+        // Hinzufügen des Lösch-Event-Listeners
+        taskContainer.querySelector(".Löschenbtn")?.addEventListener("click", () => {
+            if (confirm('Möchten Sie diese Aufgabe löschen?')) {
+                taskContainer.remove(); // Aufgabe entfernen
+            }
+        });
+
         const container = document.querySelector(".container"); 
         const newTaskButton = document.querySelector(".NewTaskbtn"); // Button auswählen
         if (container && newTaskButton) {
@@ -22,7 +30,9 @@
         }
     }
 
+    
     document.querySelector(".NewTaskbtn")?.addEventListener("click", () => {
         createPlaceholder(); // Platzhalter erstellen
     });
 });
+

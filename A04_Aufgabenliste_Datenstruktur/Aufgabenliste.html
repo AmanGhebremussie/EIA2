@@ -24,7 +24,7 @@
             <p><strong>Kommentar:</strong> "die große Bürste benutzen!"</p>
             <div class="button-container">
                 <button class="Bearbeitenbtn"> Bearbeiten </button>             <! Button zum Bearbeiten der Aufgabe>
-                <button class="Löschenbtn"> Löschen</button> <! Button zum Löschen der Aufgabe>
+                <button class="Löschenbtn" onclick= "if (confirm('Möchten sie diese Aufgabe löschen?')) this.closest('.task').remove();"> Löschen</button> <! Button zum Löschen der Aufgabe, confirm um Sicherzustellen>
             </div>
         </div>
         </div>
