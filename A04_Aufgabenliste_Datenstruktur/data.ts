@@ -1,4 +1,4 @@
-
+namespace L04{
 
     export interface Item {
 
@@ -16,8 +16,8 @@
     export let data: Data = {
 
         initialItem: [
-            { responsible: "", date: "", taskItem: "", comment:""}
+            { responsible: "Lyida", date: "2024-11-08", taskItem: "Bad", comment:""}
 
         ]
     }
-
+}
