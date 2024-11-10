@@ -15,6 +15,8 @@ function getVerse(_subjects, _verbs, _predicate) {
     verse += _predicate.splice(randomObjectIndex, 1)[0] + "."; // Füge das Objekt zur Vers-Variable hinzu, .splice ändert den INhalt im Array (hinzufügen, entfernen)
     return verse; // Gebe die Vers-Variable zurück
 }
-// Generiere einen Vers und gebe ihn aus
-alert(getVerse(subjects, verbs, predicate));
-// Direkte Ausgabe ohne Zwischenspeicherung
+// Füge einen Button hinzu, um den Vers auszugeben
+var button = document.createElement("button"); // Erstelle einen Button
+button.innerText = "Generiere Vers"; // Setze den Text des Buttons
+button.addEventListener("click", function () { return alert(getVerse(subjects, verbs, predicate)); }); // Füge die Funktion mit EventListener hinzu
+document.body.appendChild(button); // Füge den Button zum Dokument hinzu

@@ -21,6 +21,9 @@ function getVerse(_subjects: string[], _verbs: string[], _predicate: string[]): 
     return verse; // Gebe die Vers-Variable zurück
 }
 
-// Generiere einen Vers und gebe ihn aus
-alert(getVerse(subjects, verbs, predicate));
- // Direkte Ausgabe ohne Zwischenspeicherung
+    // Füge einen Button hinzu, um den Vers auszugeben
+    const button = document.createElement("button"); // Erstelle einen Button
+    button.innerText = "Generiere Vers"; // Setze den Text des Buttons
+    button.addEventListener("click", () => alert(getVerse(subjects, verbs, predicate))); // Füge die Funktion mit EventListener hinzu
+    document.body.appendChild(button); // Füge den Button zum Dokument hinzu
+
