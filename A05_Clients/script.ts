@@ -9,6 +9,11 @@ namespace L05 {
                 }
                 const data = await response.json();
                 console.log(data); // Hier kannst du die Daten verarbeiten und in die App einfügen
+                // Beispiel: Daten in die Seite einfügen (z.B. neue Aufgaben anzeigen)
+                data.initialItem.forEach((item: any) => {
+                    // Hier könntest du auch eine Funktion aufrufen, um die Daten im UI darzustellen
+                    console.log(item);
+                });
             } catch (error) {
                 console.error('Fehler beim Laden der Daten:', error);
             }
@@ -49,9 +54,7 @@ namespace L05 {
             const exampleData = { task: "Neue Aufgabe" }; // Beispiel-Daten
             sendData(exampleData); // Daten senden
         });
-    });
 
-    document.addEventListener("DOMContentLoaded", () => {
         // Funktion zum Erstellen eines neuen Platzhalters
         function createPlaceholder() {
             const taskContainer = document.createElement("div");

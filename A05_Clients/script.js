@@ -56,6 +56,11 @@ var L05;
                         case 2:
                             data = _a.sent();
                             console.log(data); // Hier kannst du die Daten verarbeiten und in die App einfügen
+                            // Beispiel: Daten in die Seite einfügen (z.B. neue Aufgaben anzeigen)
+                            data.initialItem.forEach(function (item) {
+                                // Hier könntest du auch eine Funktion aufrufen, um die Daten im UI darzustellen
+                                console.log(item);
+                            });
                             return [3 /*break*/, 4];
                         case 3:
                             error_1 = _a.sent();
@@ -105,26 +110,6 @@ var L05;
                 });
             });
         }
-        var _a;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0: 
-                // Initiale Daten laden
-                return [4 /*yield*/, loadInitialData()];
-                case 1:
-                    // Initiale Daten laden
-                    _b.sent();
-                    // Beispiel für das Senden von Daten (z.B. beim Klicken eines Buttons)
-                    (_a = document.querySelector(".NewTaskbtn")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () {
-                        var exampleData = { task: "Neue Aufgabe" }; // Beispiel-Daten
-                        sendData(exampleData); // Daten senden
-                    });
-                    return [2 /*return*/];
-            }
-        });
-    }); });
-    document.addEventListener("DOMContentLoaded", function () {
-        var _a;
         // Funktion zum Erstellen eines neuen Platzhalters
         function createPlaceholder() {
             var taskContainer = document.createElement("div");
@@ -151,27 +136,44 @@ var L05;
                 container.insertBefore(taskContainer, newTaskButton.nextSibling); // Neue Aufgabe unter dem Button einfügen
             }
         }
-        // Event-Listener für den "Neue Aufgabe"-Button
-        (_a = document.querySelector(".NewTaskbtn")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () {
-            createPlaceholder(); // Platzhalter erstellen
-            console.log("Neue Aufgabe erstellt");
-        });
-        // Event-Listener für bestehende Aufgaben hinzufügen (falls vorhanden)
-        var existingTasks = document.querySelectorAll(".task"); // Alle bestehenden Aufgaben
-        existingTasks.forEach(function (task) {
-            var löschenButton = task.querySelector(".Löschenbtn");
-            if (löschenButton) {
-                löschenButton.addEventListener("click", function () {
-                    // Sicherheitsabfrage zum Löschen
-                    if (confirm("Möchten Sie diese Aufgabe wirklich löschen?")) {
-                        task.remove(); // Entfernt das gesamte Task-Element
-                        console.log("Aufgabe gelöscht");
-                    }
-                    else {
-                        console.log("Löschen abgebrochen");
-                    }
-                });
+        var existingTasks;
+        var _a, _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0: 
+                // Initiale Daten laden
+                return [4 /*yield*/, loadInitialData()];
+                case 1:
+                    // Initiale Daten laden
+                    _c.sent();
+                    // Beispiel für das Senden von Daten (z.B. beim Klicken eines Buttons)
+                    (_a = document.querySelector(".NewTaskbtn")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () {
+                        var exampleData = { task: "Neue Aufgabe" }; // Beispiel-Daten
+                        sendData(exampleData); // Daten senden
+                    });
+                    // Event-Listener für den "Neue Aufgabe"-Button
+                    (_b = document.querySelector(".NewTaskbtn")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", function () {
+                        createPlaceholder(); // Platzhalter erstellen
+                        console.log("Neue Aufgabe erstellt");
+                    });
+                    existingTasks = document.querySelectorAll(".task");
+                    existingTasks.forEach(function (task) {
+                        var löschenButton = task.querySelector(".Löschenbtn");
+                        if (löschenButton) {
+                            löschenButton.addEventListener("click", function () {
+                                // Sicherheitsabfrage zum Löschen
+                                if (confirm("Möchten Sie diese Aufgabe wirklich löschen?")) {
+                                    task.remove(); // Entfernt das gesamte Task-Element
+                                    console.log("Aufgabe gelöscht");
+                                }
+                                else {
+                                    console.log("Löschen abgebrochen");
+                                }
+                            });
+                        }
+                    });
+                    return [2 /*return*/];
             }
         });
-    });
+    }); });
 })(L05 || (L05 = {}));
