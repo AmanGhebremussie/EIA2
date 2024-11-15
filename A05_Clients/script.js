@@ -46,7 +46,7 @@ var L05;
                     switch (_a.label) {
                         case 0:
                             _a.trys.push([0, 3, , 4]);
-                            return [4 /*yield*/, fetch('https://amanghebremussie.github.io/EIA2/data.json')];
+                            return [4 /*yield*/, fetch('https://amanghebremussie.github.io/EIA2/A05_Clients/data.json')];
                         case 1:
                             response = _a.sent();
                             if (!response.ok) {

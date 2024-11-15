@@ -3,7 +3,7 @@ namespace L05 {
         // Funktion zum Laden der Startdaten aus einer JSON-Datei
         async function loadInitialData() {
             try {
-                const response = await fetch('https://amanghebremussie.github.io/EIA2/data.json'); // URL zur JSON-Datei
+                const response = await fetch('https://amanghebremussie.github.io/EIA2/A05_Clients/data.json'); // URL zur JSON-Datei
                 if (!response.ok) {
                     throw new Error('Netzwerkantwort war nicht ok');
                 }
