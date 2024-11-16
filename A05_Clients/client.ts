@@ -9,7 +9,7 @@ namespace L05 {
     // Daten von JSON laden
     export async function loadInitialData(url: string): Promise<Task[]> {
         try {
-            const response = await fetch(url);
+            const response = await fetch(url);  // URL von GitHub Raw verwenden
             if (!response.ok) {
                 throw new Error("Fehler beim Laden der Daten");
             }
@@ -24,19 +24,19 @@ namespace L05 {
     document.addEventListener("DOMContentLoaded", () => {
         // Event-Listener für den "Neue Aufgabe"-Button
         document.querySelector(".NewTaskbtn")?.addEventListener("click", async () => {
-            const data = await loadInitialData("data.json"); // Lade die Daten aus der JSON-Datei
+            // Die Daten von der Raw-URL laden
+            const data = await loadInitialData("https://raw.githubusercontent.com/AmanGhebremussie/EIA2/main/A05_Clients/data.json");
 
             // Stelle sicher, dass Daten vorhanden sind
             if (data.length > 0) {
-                // Du kannst hier auch eine andere Logik verwenden, um mehrere Aufgaben anzuzeigen
-                // Hier wähle ich die erste Aufgabe aus den geladenen Daten
-                const firstTask = data[0]; // Oder wähle einen anderen Index, wenn du eine spezifische Aufgabe möchtest
+                // Die erste Aufgabe aus den geladenen Daten
+                const firstTask = data[0]; // Du kannst auch eine andere Logik verwenden, um eine bestimmte Aufgabe zu wählen
 
                 // Funktion zum Erstellen eines neuen Platzhalters mit den Daten
                 const taskContainer = document.createElement("div");
                 taskContainer.classList.add("task"); // Klasse für die neue Aufgabe
                 taskContainer.innerHTML = `
-                    <h2>${firstTask.taskItem}</h2>  <!-- taskItem wird hier als Überschrift angezeigt -->
+                    <h2>${firstTask.taskItem}</h2>  <!-- Taskname wird angezeigt -->
                     <p><strong>Zuständig:</strong> ${firstTask.responsible}</p>
                     <p><strong>Fällig:</strong> ${firstTask.date}</p>
                     <p><strong>Kommentar:</strong> ${firstTask.comment || "Kein Kommentar"}</p>

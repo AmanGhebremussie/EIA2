@@ -72,7 +72,7 @@ var L05;
             var data, firstTask, taskContainer_1, löschenButton, container, newTaskButton;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, loadInitialData("data.json")];
+                    case 0: return [4 /*yield*/, loadInitialData("https://raw.githubusercontent.com/AmanGhebremussie/EIA2/main/A05_Clients/data.json")];
                     case 1:
                         data = _a.sent();
                         // Stelle sicher, dass Daten vorhanden sind
@@ -80,7 +80,7 @@ var L05;
                             firstTask = data[0];
                             taskContainer_1 = document.createElement("div");
                             taskContainer_1.classList.add("task"); // Klasse für die neue Aufgabe
-                            taskContainer_1.innerHTML = "\n                    <h2>".concat(firstTask.taskItem, "</h2>  <!-- taskItem wird hier als \u00DCberschrift angezeigt -->\n                    <p><strong>Zust\u00E4ndig:</strong> ").concat(firstTask.responsible, "</p>\n                    <p><strong>F\u00E4llig:</strong> ").concat(firstTask.date, "</p>\n                    <p><strong>Kommentar:</strong> ").concat(firstTask.comment || "Kein Kommentar", "</p>\n                    <div class=\"button-container\">\n                        <button class=\"Bearbeitenbtn\"> Bearbeiten </button>\n                        <button class=\"L\u00F6schenbtn\"> L\u00F6schen</button>\n                    </div>\n                ");
+                            taskContainer_1.innerHTML = "\n                    <h2>".concat(firstTask.taskItem, "</h2>  <!-- Taskname wird angezeigt -->\n                    <p><strong>Zust\u00E4ndig:</strong> ").concat(firstTask.responsible, "</p>\n                    <p><strong>F\u00E4llig:</strong> ").concat(firstTask.date, "</p>\n                    <p><strong>Kommentar:</strong> ").concat(firstTask.comment || "Kein Kommentar", "</p>\n                    <div class=\"button-container\">\n                        <button class=\"Bearbeitenbtn\"> Bearbeiten </button>\n                        <button class=\"L\u00F6schenbtn\"> L\u00F6schen</button>\n                    </div>\n                ");
                             löschenButton = taskContainer_1.querySelector(".Löschenbtn");
                             if (löschenButton) {
                                 löschenButton.addEventListener("click", function () {
