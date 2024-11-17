@@ -65,11 +65,41 @@ var L05;
         });
     }
     L05.loadInitialData = loadInitialData;
+    // Daten von einer Textdatei laden und in der Konsole anzeigen
+    function loadFromURL(url) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, data, error_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, fetch(url)];
+                    case 1:
+                        response = _a.sent();
+                        if (!response.ok) {
+                            throw new Error("Fehler beim Laden der Daten: ".concat(response.statusText));
+                        }
+                        return [4 /*yield*/, response.text()];
+                    case 2:
+                        data = _a.sent();
+                        console.log("Daten erfolgreich geladen:");
+                        console.log(data); // Ausgabe in der Konsole
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_2 = _a.sent();
+                        console.error("Fehler beim Laden der Daten:", error_2);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    }
+    L05.loadFromURL = loadFromURL;
     document.addEventListener("DOMContentLoaded", function () {
         var _a;
         // Event-Listener für den "Neue Aufgabe"-Button
         (_a = document.querySelector(".NewTaskbtn")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () { return __awaiter(_this, void 0, void 0, function () {
-            var data, firstTask, taskContainer_1, löschenButton, container, newTaskButton;
+            var data, firstTask, taskContainer_1, löschenButton, container, newTaskButton, testURL;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, loadInitialData("https://raw.githubusercontent.com/AmanGhebremussie/EIA2/main/A05_Clients/data.json")];
@@ -80,11 +110,10 @@ var L05;
                             firstTask = data[0];
                             taskContainer_1 = document.createElement("div");
                             taskContainer_1.classList.add("task"); // Klasse für die neue Aufgabe
-                            taskContainer_1.innerHTML = "\n                    <h2>".concat(firstTask.taskItem, "</h2>  <!-- Taskname wird angezeigt -->\n                    <p><strong>Zust\u00E4ndig:</strong> ").concat(firstTask.responsible, "</p>\n                    <p><strong>F\u00E4llig:</strong> ").concat(firstTask.date, "</p>\n                    <p><strong>Kommentar:</strong> ").concat(firstTask.comment || "Kein Kommentar", "</p>\n                    <div class=\"button-container\">\n                        <button class=\"Bearbeitenbtn\"> Bearbeiten </button>\n                        <button class=\"L\u00F6schenbtn\"> L\u00F6schen</button>\n                    </div>\n                ");
+                            taskContainer_1.innerHTML = "\n                    <h2>".concat(firstTask.taskItem, "</h2>  <!-- Taskname wird angezeigt -->\n                    <p><strong>Zust\u00E4ndig:</strong> ").concat(firstTask.responsible, "</p>\n                    <p><strong>F\u00E4llig:</strong> ").concat(firstTask.date, "</p>\n                    <p><strong>Kommentar:</strong> ").concat(firstTask.comment || "Kein Kommentar", "</p> \n                    <div class=\"button-container\">\n                        <button class=\"Bearbeitenbtn\"> Bearbeiten </button>\n                        <button class=\"L\u00F6schenbtn\"> L\u00F6schen</button>\n                    </div>\n                ");
                             löschenButton = taskContainer_1.querySelector(".Löschenbtn");
                             if (löschenButton) {
                                 löschenButton.addEventListener("click", function () {
-                                    // Sicherheitsabfrage zum Löschen
                                     if (confirm("Möchten Sie diese Aufgabe wirklich löschen?")) {
                                         taskContainer_1.remove(); // Entfernt das gesamte Task-Element
                                         console.log("Aufgabe gelöscht");
@@ -103,6 +132,10 @@ var L05;
                         else {
                             console.log("Keine Daten zum Anzeigen");
                         }
+                        testURL = "https://jirkadelloro.github.io/EIA2-Inverted/L05_Client/Material/Test.txt";
+                        return [4 /*yield*/, loadFromURL(testURL)];
+                    case 2:
+                        _a.sent();
                         return [2 /*return*/];
                 }
             });

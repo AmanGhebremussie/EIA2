@@ -9,11 +9,11 @@ namespace L05 {
     // Daten von JSON laden
     export async function loadInitialData(url: string): Promise<Task[]> {
         try {
-            const response = await fetch(url);  // URL von GitHub Raw verwenden
+            const response = await fetch(url); // JSON-Daten laden
             if (!response.ok) {
                 throw new Error("Fehler beim Laden der Daten");
             }
-            const data: Task[] = await response.json(); // Direktes Parsen der Task-Daten
+            const data: Task[] = await response.json(); // JSON-Daten in Task-Array umwandeln
             return data;
         } catch (error) {
             console.error("Fehler beim Laden der Startdaten:", error);
@@ -21,16 +21,33 @@ namespace L05 {
         }
     }
 
+    // Daten von einer Textdatei laden und in der Konsole anzeigen
+    export async function loadFromURL(url: string): Promise<void> {
+        try {
+            const response = await fetch(url); // Textdaten laden
+            if (!response.ok) {
+                throw new Error(`Fehler beim Laden der Daten: ${response.statusText}`);
+            }
+            const data = await response.text(); // Textdaten abrufen
+            console.log("Daten erfolgreich geladen:");
+            console.log(data); // Ausgabe in der Konsole
+        } catch (error) {
+            console.error("Fehler beim Laden der Daten:", error);
+        }
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
         // Event-Listener für den "Neue Aufgabe"-Button
         document.querySelector(".NewTaskbtn")?.addEventListener("click", async () => {
-            // Die Daten von der Raw-URL laden
-            const data = await loadInitialData("https://raw.githubusercontent.com/AmanGhebremussie/EIA2/main/A05_Clients/data.json");
+            // JSON-Daten laden
+            const data = await loadInitialData(
+                "https://raw.githubusercontent.com/AmanGhebremussie/EIA2/main/A05_Clients/data.json"
+            );
 
             // Stelle sicher, dass Daten vorhanden sind
             if (data.length > 0) {
                 // Die erste Aufgabe aus den geladenen Daten
-                const firstTask = data[0]; // Du kannst auch eine andere Logik verwenden, um eine bestimmte Aufgabe zu wählen
+                const firstTask = data[0]; // Beispiel: Erster Task
 
                 // Funktion zum Erstellen eines neuen Platzhalters mit den Daten
                 const taskContainer = document.createElement("div");
@@ -39,7 +56,7 @@ namespace L05 {
                     <h2>${firstTask.taskItem}</h2>  <!-- Taskname wird angezeigt -->
                     <p><strong>Zuständig:</strong> ${firstTask.responsible}</p>
                     <p><strong>Fällig:</strong> ${firstTask.date}</p>
-                    <p><strong>Kommentar:</strong> ${firstTask.comment || "Kein Kommentar"}</p>
+                    <p><strong>Kommentar:</strong> ${firstTask.comment || "Kein Kommentar"}</p> 
                     <div class="button-container">
                         <button class="Bearbeitenbtn"> Bearbeiten </button>
                         <button class="Löschenbtn"> Löschen</button>
@@ -50,7 +67,6 @@ namespace L05 {
                 const löschenButton = taskContainer.querySelector(".Löschenbtn");
                 if (löschenButton) {
                     löschenButton.addEventListener("click", () => {
-                        // Sicherheitsabfrage zum Löschen
                         if (confirm("Möchten Sie diese Aufgabe wirklich löschen?")) {
                             taskContainer.remove(); // Entfernt das gesamte Task-Element
                             console.log("Aufgabe gelöscht");
@@ -69,6 +85,11 @@ namespace L05 {
             } else {
                 console.log("Keine Daten zum Anzeigen");
             }
+// Es soll in der Console.log der text aus Jirkas github eingefügt werden
+
+            // Daten von der Text-URL laden und in der Konsole ausgeben
+            const testURL = "https://jirkadelloro.github.io/EIA2-Inverted/L05_Client/Material/Test.txt";
+            await loadFromURL(testURL);
         });
     });
 }
