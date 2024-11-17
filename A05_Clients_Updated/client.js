@@ -1,148 +1,93 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
-    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
+"use strict";
 var L05;
 (function (L05) {
-    var _this = this;
     // Daten von JSON laden
-    function loadInitialData(url) {
-        return __awaiter(this, void 0, void 0, function () {
-            var response, data, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, fetch(url)];
-                    case 1:
-                        response = _a.sent();
-                        if (!response.ok) {
-                            throw new Error("Fehler beim Laden der Daten");
-                        }
-                        return [4 /*yield*/, response.json()];
-                    case 2:
-                        data = _a.sent();
-                        return [2 /*return*/, data];
-                    case 3:
-                        error_1 = _a.sent();
-                        console.error("Fehler beim Laden der Startdaten:", error_1);
-                        return [2 /*return*/, []];
-                    case 4: return [2 /*return*/];
-                }
-            });
-        });
+    async function loadInitialData(url) {
+        try {
+            const response = await fetch(url); // JSON-Daten laden
+            if (!response.ok) {
+                throw new Error("Fehler beim Laden der Daten");
+            }
+            const data = await response.json(); // JSON-Daten in Task-Array umwandeln
+            return data;
+        }
+        catch (error) {
+            console.error("Fehler beim Laden der Startdaten:", error);
+            return [];
+        }
     }
     L05.loadInitialData = loadInitialData;
     // Daten von einer Textdatei laden und in der Konsole anzeigen
-    function loadFromURL(url) {
-        return __awaiter(this, void 0, void 0, function () {
-            var response, data, error_2;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, fetch(url)];
-                    case 1:
-                        response = _a.sent();
-                        if (!response.ok) {
-                            throw new Error("Fehler beim Laden der Daten: ".concat(response.statusText));
-                        }
-                        return [4 /*yield*/, response.text()];
-                    case 2:
-                        data = _a.sent();
-                        console.log("Daten erfolgreich geladen:");
-                        console.log(data); // Ausgabe in der Konsole
-                        return [3 /*break*/, 4];
-                    case 3:
-                        error_2 = _a.sent();
-                        console.error("Fehler beim Laden der Daten:", error_2);
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
-                }
-            });
-        });
+    async function loadFromURL(url) {
+        try {
+            const response = await fetch(url); // Textdaten laden
+            if (!response.ok) {
+                throw new Error(`Fehler beim Laden der Daten: ${response.statusText}`);
+            }
+            const data = await response.text(); // Textdaten abrufen
+            console.log("Daten erfolgreich geladen:");
+            console.log(data); // Ausgabe in der Konsole
+        }
+        catch (error) {
+            console.error("Fehler beim Laden der Daten:", error);
+        }
     }
     L05.loadFromURL = loadFromURL;
-    document.addEventListener("DOMContentLoaded", function () {
-        var _a;
+    document.addEventListener("DOMContentLoaded", () => {
         // Event-Listener für den "Neue Aufgabe"-Button
-        (_a = document.querySelector(".NewTaskbtn")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () { return __awaiter(_this, void 0, void 0, function () {
-            var data, firstTask, taskContainer_1, buttonContainer, löschenButton, container, newTaskButton, testURL;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, loadInitialData("https://raw.githubusercontent.com/AmanGhebremussie/EIA2/main/A05_Clients/data.json")];
-                    case 1:
-                        data = _a.sent();
-                        // Stelle sicher, dass Daten vorhanden sind
-                        if (data.length > 0) {
-                            firstTask = data[0];
-                            taskContainer_1 = document.createElement("div");
-                            taskContainer_1.classList.add("task"); // Klasse für die neue Aufgabe
-                            taskContainer_1.innerHTML = "\n                    <h2>".concat(firstTask.taskItem, "</h2>  <!-- Taskname wird angezeigt -->\n                    <p><strong>Zust\u00E4ndig:</strong> ").concat(firstTask.responsible, "</p>\n                    <p><strong>F\u00E4llig:</strong> ").concat(firstTask.date, "</p>\n                    <p><strong>Kommentar:</strong> ").concat(firstTask.comment || "Kein Kommentar", "</p> \n                    <div class=\"button-container\" style=\"display: none;\"> \n                        <!-- Buttons anfangs verstecken -->\n                        <button class=\"Bearbeitenbtn\"> Bearbeiten </button>\n                        <button class=\"L\u00F6schenbtn\"> L\u00F6schen</button>\n                    </div>\n                ");
-                            buttonContainer = taskContainer_1.querySelector(".button-container");
-                            if (buttonContainer) {
-                                buttonContainer.style.display = "block";
-                            }
-                            löschenButton = taskContainer_1.querySelector(".Löschenbtn");
-                            if (löschenButton) {
-                                löschenButton.addEventListener("click", function () {
-                                    if (confirm("Möchten Sie diese Aufgabe wirklich löschen?")) {
-                                        taskContainer_1.remove(); // Entfernt das gesamte Task-Element
-                                        console.log("Aufgabe gelöscht");
-                                    }
-                                    else {
-                                        console.log("Löschen abgebrochen");
-                                    }
-                                });
-                            }
-                            container = document.querySelector(".container");
-                            newTaskButton = document.querySelector(".NewTaskbtn");
-                            if (container && newTaskButton) {
-                                container.insertBefore(taskContainer_1, newTaskButton.nextSibling); // Neue Aufgabe unter dem Button einfügen
-                            }
+        document.querySelector(".NewTaskbtn")?.addEventListener("click", async () => {
+            // JSON-Daten laden
+            const data = await loadInitialData("https://raw.githubusercontent.com/AmanGhebremussie/EIA2/main/A05_Clients/data.json");
+            // Stelle sicher, dass Daten vorhanden sind
+            if (data.length > 0) {
+                // Die erste Aufgabe aus den geladenen Daten
+                const firstTask = data[0]; // Beispiel: Erster Task
+                // Funktion zum Erstellen eines neuen Platzhalters mit den Daten
+                const taskContainer = document.createElement("div");
+                taskContainer.classList.add("task"); // Klasse für die neue Aufgabe
+                taskContainer.innerHTML = `
+                    <h2>${firstTask.taskItem}</h2>  <!-- Taskname wird angezeigt -->
+                    <p><strong>Zuständig:</strong> ${firstTask.responsible}</p>
+                    <p><strong>Fällig:</strong> ${firstTask.date}</p>
+                    <p><strong>Kommentar:</strong> ${firstTask.comment || "Kein Kommentar"}</p> 
+                    <div class="button-container" style="display: none;"> 
+                        <!-- Buttons anfangs verstecken -->
+                        <button class="Bearbeitenbtn"> Bearbeiten </button>
+                        <button class="Löschenbtn"> Löschen</button>
+                    </div>
+                `;
+                // Buttons sichtbar machen, wenn die Aufgabe erstellt wurde
+                const buttonContainer = taskContainer.querySelector(".button-container");
+                if (buttonContainer) {
+                    buttonContainer.style.display = "block";
+                }
+                // Den "Löschen"-Button finden und den Event-Listener hinzufügen
+                const löschenButton = taskContainer.querySelector(".Löschenbtn");
+                if (löschenButton) {
+                    löschenButton.addEventListener("click", () => {
+                        if (confirm("Möchten Sie diese Aufgabe wirklich löschen?")) {
+                            taskContainer.remove(); // Entfernt das gesamte Task-Element
+                            console.log("Aufgabe gelöscht");
                         }
                         else {
-                            console.log("Keine Daten zum Anzeigen");
+                            console.log("Löschen abgebrochen");
                         }
-                        testURL = "https://jirkadelloro.github.io/EIA2-Inverted/L05_Client/Material/Test.txt";
-                        return [4 /*yield*/, loadFromURL(testURL)];
-                    case 2:
-                        _a.sent();
-                        return [2 /*return*/];
+                    });
                 }
-            });
-        }); });
+                // Das neue Element in den DOM einfügen
+                const container = document.querySelector(".container");
+                const newTaskButton = document.querySelector(".NewTaskbtn");
+                if (container && newTaskButton) {
+                    container.insertBefore(taskContainer, newTaskButton.nextSibling); // Neue Aufgabe unter dem Button einfügen
+                }
+            }
+            else {
+                console.log("Keine Daten zum Anzeigen");
+            }
+            // Daten von der Text-URL laden und in der Konsole ausgeben
+            const testURL = "https://jirkadelloro.github.io/EIA2-Inverted/L05_Client/Material/Test.txt";
+            await loadFromURL(testURL);
+        });
     });
 })(L05 || (L05 = {}));
+//# sourceMappingURL=client.js.map
