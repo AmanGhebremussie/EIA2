@@ -1,4 +1,14 @@
-#myCanvas{
 
-border: solid black 3px;
+#myCanvas { 
+    display: block; 
+    margin: 0 auto; 
+    position: relative; 
+    border: solid black 2px;
+}
+
+@media (max-width: 600px) {
+    body {
+        flex-direction: column; 
+    }
+    
 }
