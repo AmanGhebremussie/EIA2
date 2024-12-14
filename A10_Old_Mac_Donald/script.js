@@ -1,34 +1,62 @@
-var _display = document.getElementById("display");
+"use strict";
+let _display = document.getElementById("display");
+let foodStash = { "grass": 250, "grains": 50, "meat": 100, "fruits": 100, "mud": 100 };
 // Klasse Animal erstellen mit class "Name". In einer Klasse werden alle Eigenschaften eingetragen
-var Animal = /** @class */ (function () {
+class Animal {
+    name;
+    sound;
+    food;
+    amount;
+    species;
     // Um die Einzelnen Attribute der Tiere nicht immer wieder aufzuschreiben, kann man den Kontruktor nutzen.
-    function Animal(_name, _sound, _food, _amount, _species) {
+    constructor(_name, _sound, _food, _amount, _species) {
         this.name = _name;
         this.sound = _sound;
         this.food = _food;
         this.amount = _amount;
         this.species = _species;
     }
-    Animal.prototype.sing = function () {
+    sing() {
         // Animalheader ist die Überschrift und das soll ein h2 Element erstellen mit den Inhalt des Tieres.
-        var animalHeader = document.createElement("h2");
+        let animalHeader = document.createElement("h2");
         animalHeader.textContent = this.name;
-        var songText = document.createElement("p");
-        songText.innerHTML = "\n            Old MacDonald had a farm, Ee i ee i o<br>\n            And on his farm he had a ".concat(this.species, ", Ee i ee i o<br>       \n            With a ").concat(this.sound, " here and a ").concat(this.sound, " there,<br>\n            Here a ").concat(this.sound, ", there a ").concat(this.sound, ", everywhere a ").concat(this.sound, ".\n        ");
+        let songText = document.createElement("p");
+        songText.innerHTML = `
+            Old MacDonald had a farm, Ee i ee i o<br>
+            And on his farm he had a ${this.species}, Ee i ee i o<br>       
+            With a ${this.sound} here and a ${this.sound} there,<br>
+            Here a ${this.sound}, there a ${this.sound}, everywhere a ${this.sound}.
+        `;
         _display.appendChild(animalHeader);
         _display.appendChild(songText);
-    };
-    return Animal;
-}());
+    }
+    eat() {
+        if (foodStash[this.food] >= this.amount) {
+            foodStash[this.food] -= this.amount;
+        }
+        else {
+            console.warn(`Not enough ${this.food} for ${this.name}.`);
+        }
+        let stashText = document.createElement("p");
+        stashText.innerHTML = `Remaining ${this.food}: ${foodStash[this.food]} units`;
+        _display.appendChild(stashText);
+    }
+}
 // Tiere erstellen
-var cow = new Animal("Bessie", "Moo", "Grass", 5, "Cow");
-var chicken = new Animal("Cluckie", "Cluck", "Grains", 3, "Chicken");
-var dog = new Animal("Rover", "Woof", "Meat", 4, "Dog");
-var horse = new Animal("Pegasus", "Prrrr", "Grass", 1, "Horse");
-var pig = new Animal("Peppa", "Oink", "Mud", 3, "Pig");
+let cow = new Animal("Bessie", "Moo", "grass", 5, "Cow");
+let chicken = new Animal("Cluckie", "Cluck", "grains", 3, "Chicken");
+let dog = new Animal("Rover", "Woof", "meat", 4, "Dog");
+let horse = new Animal("Pegasus", "Prrrr", "fruits", 1, "Horse");
+let pig = new Animal("Peppa", "Oink", "mud", 3, "Pig");
 // Aufruf der Gesänge der Tiere 
 cow.sing();
+cow.eat();
 chicken.sing();
+chicken.eat();
 dog.sing();
+dog.eat();
 horse.sing();
+horse.eat();
 pig.sing();
+pig.eat();
+//# sourceMappingURL=script.js.map

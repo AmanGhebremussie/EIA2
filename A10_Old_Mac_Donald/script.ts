@@ -1,5 +1,7 @@
 let _display: HTMLDivElement = <HTMLDivElement>document.getElementById("display");
 
+let foodStash: { [key: string]: number } = {"grass": 250, "grains": 50, "meat": 100, "fruits": 100, "mud": 100};
+
 // Klasse Animal erstellen mit class "Name". In einer Klasse werden alle Eigenschaften eingetragen
 class Animal {
     name: string;
@@ -34,18 +36,36 @@ class Animal {
         _display.appendChild(animalHeader);
         _display.appendChild(songText);
     }
+
+    eat(): void {
+        if (foodStash[this.food] >= this.amount) {
+            foodStash[this.food] -= this.amount;
+        } else {
+            console.warn(`Not enough ${this.food} for ${this.name}.`);
+        }
+        
+        let stashText: HTMLParagraphElement = document.createElement("p");
+        stashText.innerHTML = `Remaining ${this.food}: ${foodStash[this.food]} units`;
+        _display.appendChild(stashText);
+    }
 }
 
 // Tiere erstellen
-let cow = new Animal("Bessie", "Moo", "Grass", 5, "Cow");
-let chicken = new Animal("Cluckie", "Cluck", "Grains", 3, "Chicken");
-let dog = new Animal("Rover", "Woof", "Meat", 4, "Dog");
-let horse = new Animal("Pegasus", "Prrrr", "Grass", 1, "Horse");
-let pig = new Animal("Peppa", "Oink", "Mud", 3, "Pig");
+let cow = new Animal("Bessie", "Moo", "grass", 5, "Cow");
+let chicken = new Animal("Cluckie", "Cluck", "grains", 3, "Chicken");
+let dog = new Animal("Rover", "Woof", "meat", 4, "Dog");
+let horse = new Animal("Pegasus", "Prrrr", "fruits", 1, "Horse");
+let pig = new Animal("Peppa", "Oink", "mud", 3, "Pig");
 
 // Aufruf der Gesänge der Tiere 
 cow.sing();
+cow.eat();
 chicken.sing();
+chicken.eat();
 dog.sing();
+dog.eat();
 horse.sing();
+horse.eat();
 pig.sing();
+pig.eat();
+
