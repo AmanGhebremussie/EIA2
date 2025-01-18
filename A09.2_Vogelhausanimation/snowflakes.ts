@@ -1,7 +1,7 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-class Snowflake {
+export class Snowflake {
     constructor(x, y, size, speed) {
         this.x = x;
         this.y = y;
@@ -23,7 +23,7 @@ class Snowflake {
     }
 }
 
-class Snowfall {
+export class Snowfall {
     constructor() {
         this.snowflakes = [];
     }
@@ -59,5 +59,5 @@ class Snowfall {
     }
 }
 
-const snowfall = new Snowfall();
-snowfall.start();
+export const snowfall = new Snowfall();
+export snowfall.start();

@@ -1,44 +1,46 @@
-// Zugriff auf das Canvas-Element und den 2D-Rendering-Kontext
 const canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
 const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 
-// Sicherstellen, dass der Kontext verfügbar ist
 if (ctx) {
-    /**
-     * Klasse für Vögel
-     */
-    class Bird {
-        x: number; // Horizontale Position des Vogels
-        y: number; // Vertikale Position des Vogels
-        color: string; // Farbe des Vogels
-        type: "flying" | "pecking"; // Typ des Vogels (fliegend oder pickend)
-        peckingOffset: number; // Bewegung des Kopfes beim Picken oder der Flügel beim Fliegen
-        bodyOffset: number; // Bewegung des Körpers beim Picken
+    // Superklasse für bewegte Objekte
+    abstract class MovableObject {
+        x: number;
+        y: number;
+        speed: number;
 
-        constructor(x: number, y: number, color: string, type: "flying" | "pecking") {
-            this.x = x; // Startposition auf der x-Achse
-            this.y = y; // Startposition auf der y-Achse
-            this.color = color; // Farbe des Vogels
-            this.type = type; // Typ des Vogels
-            this.peckingOffset = 0; // Initialer Offset für den Kopf oder die Flügel
-            this.bodyOffset = 0; // Initialer Offset für den Körper
+        constructor(x: number, y: number, speed: number) {
+            this.x = x;
+            this.y = y;
+            this.speed = speed;
         }
 
-        // Aktualisiert die Bewegung der Vögel
-        update() {
+        abstract update(): void;
+        abstract draw(ctx: CanvasRenderingContext2D): void;
+    }
+
+    // Subklasse Bird
+    class Bird extends MovableObject {
+        color: string;
+        type: "flying" | "pecking";
+        peckingOffset: number = 0;
+
+        constructor(x: number, y: number, speed: number, color: string, type: "flying" | "pecking") {
+            super(x, y, speed);
+            this.color = color;
+            this.type = type;
+        }
+
+        update(): void {
             if (this.type === "flying") {
-                this.x += 2; // Fliegende Vögel bewegen sich nach rechts
-                if (this.x > canvas.width + 50) this.x = -50; // Wiederholt die Bewegung
-                this.peckingOffset = Math.sin(Date.now() / 200) * 8; // Flügelbewegung
+                this.x += this.speed;
+                if (this.x > canvas.width + 50) this.x = -50;
+                this.peckingOffset = Math.sin(Date.now() / 200) * 8;
             } else if (this.type === "pecking") {
-                this.peckingOffset = Math.sin(Date.now() / 300) * 10; // Kopfbewegung
-                this.bodyOffset = Math.sin(Date.now() / 300) * 5; // Körperbewegung
+                this.peckingOffset = Math.sin(Date.now() / 300) * 10;
             }
         }
 
-        // Zeichnet den Vogel
-        draw() {
-            // Flügel für fliegende Vögel
+        draw(ctx: CanvasRenderingContext2D) {
             if (this.type === "flying") {
                 ctx.beginPath();
                 ctx.moveTo(this.x, this.y); // Startpunkt des linken Flügels
@@ -53,76 +55,39 @@ if (ctx) {
                 ctx.lineTo(this.x + 20, this.y); // Endpunkt des rechten Flügels
                 ctx.fillStyle = this.color;
                 ctx.fill();
+                
             }
 
-            // Körper des Vogels
             ctx.beginPath();
-            ctx.ellipse(this.x, this.y + (this.type === "pecking" ? this.bodyOffset : 0), 15, 10, 0, 0, Math.PI * 2);
+            ctx.ellipse(this.x, this.y, 15, 10, 0, 0, Math.PI * 2);
             ctx.fillStyle = this.color;
             ctx.fill();
 
-            // Kopf des Vogels
             ctx.beginPath();
-            ctx.arc(this.x + 15, this.y - 5 + (this.type === "pecking" ? this.peckingOffset : 0), 7, 0, Math.PI * 2);
+            ctx.arc(this.x + 15, this.y - 5 + this.peckingOffset, 7, 0, Math.PI * 2);
             ctx.fillStyle = this.color;
             ctx.fill();
-
-            // Schnabel des Vogels
-            ctx.beginPath();
-            ctx.moveTo(this.x + 20, this.y - 5 + (this.type === "pecking" ? this.peckingOffset : 0));
-            ctx.lineTo(this.x + 30, this.y - 2 + (this.type === "pecking" ? this.peckingOffset : 0));
-            ctx.lineTo(this.x + 20, this.y + 2 + (this.type === "pecking" ? this.peckingOffset : 0));
-            ctx.closePath();
-            ctx.fillStyle = "orange";
-            ctx.fill();
-
-            // Augen
-            ctx.beginPath();
-            ctx.arc(this.x + 17, this.y - 7 + (this.type === "pecking" ? this.peckingOffset : 0), 2, 0, Math.PI * 2);
-            ctx.fillStyle = "white";
-            ctx.fill();
-
-            ctx.beginPath();
-            ctx.arc(this.x + 19, this.y - 7 + (this.type === "pecking" ? this.peckingOffset : 0), 1, 0, Math.PI * 2);
-            ctx.fillStyle = "black";
-            ctx.fill();
-
-            // Beine für pickende Vögel
-            if (this.type === "pecking") {
-                ctx.beginPath();
-                ctx.moveTo(this.x - 5, this.y + 10 + this.bodyOffset); // Linkes Bein
-                ctx.lineTo(this.x - 5, this.y + 20 + this.bodyOffset);
-                ctx.moveTo(this.x + 5, this.y + 10 + this.bodyOffset); // Rechtes Bein
-                ctx.lineTo(this.x + 5, this.y + 20 + this.bodyOffset);
-                ctx.strokeStyle = "black";
-                ctx.lineWidth = 1.5;
-                ctx.stroke();
-            }
         }
     }
 
-    class Snowflake {
-        x: number;
-        y: number;
+    // Subklasse Snowflake
+    class Snowflake extends MovableObject {
         size: number;
-        speed: number;
 
-        constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.size = Math.random() * 10 + 5; // Größe der Schneeflocke
-            this.speed = Math.random() * 2 + 1; // Geschwindigkeit der Schneeflocke
+        constructor(x: number, y: number, speed: number, size: number) {
+            super(x, y, speed);
+            this.size = size;
         }
 
         update() {
-            this.y += this.speed; // Bewegung nach unten
+            this.y += this.speed;
             if (this.y > canvas.height) {
                 this.y = 0;
-                this.x = Math.random() * canvas.width; // Startet oben neu
+                this.x = Math.random() * canvas.width;
             }
         }
 
-        draw() {
+        draw(ctx: CanvasRenderingContext2D) {
             for (let j = 0; j < 6; j++) {
                 ctx.beginPath();
                 const angle = (Math.PI / 3) * j;
@@ -140,53 +105,55 @@ if (ctx) {
         }
     }
 
-    const birds: Bird[] = [];
-    const snowflakes: Snowflake[] = [];
-    const birdColors = ["red", "blue", "green", "yellow", "purple", "pink", "brown", "black"];
+    // Array für alle bewegten Objekte
+    const movableObjects: MovableObject[] = [];
+    const birdColors = ["red", "blue", "green", "yellow", "purple"];
 
-    // Initialisiert die Vögel und Schneeflocken
-    function initBirdsAndSnowflakes() {
+    // Initialisiert die bewegten Objekte
+    function initObjects() {
         for (let i = 0; i < 5; i++) {
             const x = Math.random() * canvas.width;
             const y = 500 + Math.random() * 50;
-            const color = birdColors[Math.floor(Math.random() * birdColors.length)];
-            birds.push(new Bird(x, y, color, "pecking"));
+            const speed = Math.random() * 2 + 1;
+            const color = birdColors[i % birdColors.length];
+            movableObjects.push(new Bird(x, y, speed, color, "pecking"));
         }
 
         for (let i = 0; i < 15; i++) {
             const x = Math.random() * canvas.width;
             const y = Math.random() * canvas.height / 2;
-            const color = birdColors[Math.floor(Math.random() * birdColors.length)];
-            birds.push(new Bird(x, y, color, "flying"));
+            const speed = Math.random() * 2 + 1;
+            const color = birdColors[i % birdColors.length];
+            movableObjects.push(new Bird(x, y, speed, color, "flying"));
         }
 
         for (let i = 0; i < 50; i++) {
-            snowflakes.push(new Snowflake());
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            const speed = Math.random() * 2 + 1;
+            const size = Math.random() * 10 + 5;
+            movableObjects.push(new Snowflake(x, y, speed, size));
         }
     }
 
     // Zeichnet den Hintergrund
     function drawBackground() {
         const sky = ctx.createLinearGradient(0, 0, 0, canvas.height);
-        sky.addColorStop(0, "#87CEEB"); 
-        sky.addColorStop(1, "#FFFFFF"); 
+        sky.addColorStop(0, "#87CEEB");
+        sky.addColorStop(1, "#FFFFFF");
         ctx.fillStyle = sky;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         ctx.fillStyle = "#FFFFFF";
         ctx.fillRect(0, 375, canvas.width, 225);
-    }
 
     // Sonne
-    function drawSun() {
         ctx.beginPath();
         ctx.arc(725, 75, 50, 0, Math.PI * 2);
         ctx.fillStyle = "#FFD700";
         ctx.fill();
-    }
 
     // Schneemann zeichnen
-    function drawSnowman() {
         // Kugel 1 (Körper)
         const gradient = ctx.createLinearGradient(100, 350, 200, 550);
         gradient.addColorStop(0, '#FFFFFF'); // Weiß oben
@@ -262,9 +229,7 @@ if (ctx) {
         ctx.beginPath();
         ctx.fillStyle = '#000000'; // Schwarzer Hut
         ctx.fillRect(135, 300, 30, 40); // Rechteck für Hut-Oberteil
-    }
-
-    function drawHouse() {
+        
         // Rechteck
         ctx.beginPath();
         ctx.moveTo(200, 450);
@@ -304,6 +269,12 @@ if (ctx) {
         ctx.fillStyle = "#341F1A"
         ctx.fill();
         ctx.closePath();
+
+        // Bäume hinzufügen
+        drawTree(450, 400);
+        drawTree(600, 350);
+        drawTree(700, 450);
+
     }
 
     // Baum zeichnen
@@ -327,31 +298,19 @@ if (ctx) {
         ctx.fill();
         ctx.closePath();
     }
-
-    // Animiert die Szene
+    // Animation
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawBackground();
-        drawSun();
-        drawSnowman();
-        drawHouse();
-        drawTree(450, 400);
-        drawTree(600, 350);
-        drawTree(700, 450);
 
-        birds.forEach(bird => {
-            bird.update();
-            bird.draw();
-        });
-
-        snowflakes.forEach(flake => {
-            flake.update();
-            flake.draw();
+        movableObjects.forEach(obj => {
+            obj.update();
+            obj.draw(ctx);
         });
 
         requestAnimationFrame(animate);
     }
 
-    initBirdsAndSnowflakes();
+    initObjects();
     animate();
 }
